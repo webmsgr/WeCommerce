@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WeCommerce.Data;
 using WeCommerce.Models;
 
@@ -12,6 +13,16 @@ namespace WeCommerce.Controllers
         {
             _context = context;
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var products = await _context.Products.ToListAsync();
+            return View(products);
+        }
+
+
         [HttpGet]
         public IActionResult Create()
         {
