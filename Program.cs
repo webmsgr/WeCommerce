@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using WeCommerce.Data;
+
 namespace WeCommerce
 {
     public class Program
@@ -8,6 +11,12 @@ namespace WeCommerce
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // add database
+            builder.Services.AddDbContext<WeCommerceContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             var app = builder.Build();
 
