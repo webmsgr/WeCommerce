@@ -35,6 +35,7 @@ public class Product
     /// </summary>
     [Required]
     [Range(0, double.MaxValue)]
+    [DataType(DataType.Currency)]
     public double Price { get; set; }
 
 
