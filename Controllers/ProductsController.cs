@@ -18,13 +18,13 @@ namespace WeCommerce.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Product product)
+        public async Task<IActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
             {
                 // add to DB
                 _context.Products.Add(product);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 // show success message
                 ViewData["message"] = "Product added successfully";
                 return View();
