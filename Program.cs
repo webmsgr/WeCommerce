@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WeCommerce.Data;
+using WeCommerce.Models;
+using WeCommerce.Util;
 
 namespace WeCommerce
 {
@@ -83,6 +85,26 @@ namespace WeCommerce
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            using (var scope = app.Services.CreateScope())
+            {
+                // create our default admin user if it doesn't already exist
+                // this might cause concurrency issues with scaling but who in the world will be scaling this
+                var dbContext = scope.ServiceProvider.GetRequiredService<WeCommerceContext>();
+                if (dbContext.Users.FirstOrDefault(u => u.Username == "admin") == null)
+                {
+                    // create the default admin user
+                    dbContext.Users.Add(new User
+                    {
+                        Email = "admin@localhost",
+                        Username = "admin",
+                        PasswordHash = Crypto.HashPassword("password"), // very bad but you're forced to change it after
+                        ForceChangePassword = true,
+                        IsAdmin = true
+                    });
+                    dbContext.SaveChanges();
+                }
+            }
+
 
             app.Run();
         }
