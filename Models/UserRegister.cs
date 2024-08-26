@@ -41,7 +41,15 @@ namespace WeCommerce.Models
         /// The user's password.
         /// </summary>
         [Required]
+        [MinLength(8)]
         public string Password { get; set; }
+
+        /// <summary>
+        /// The confirm password
+        /// </summary>
+        [Required]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
 
         public User ToUser()
         {
