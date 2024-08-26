@@ -44,7 +44,11 @@ namespace WeCommerce.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
-        { 
+        {
+            if (!((bool?)HttpContext.Items["isAdmin"] ?? false))
+            {
+                return Unauthorized(); // nah
+            }
             Product? product = await _context.Products.FindAsync(id);
             if (product == null)
             {
@@ -58,6 +62,10 @@ namespace WeCommerce.Controllers
 
         public async Task<IActionResult> Edit(Product product)
         {
+            if (!((bool?)HttpContext.Items["isAdmin"] ?? false))
+            {
+                return Unauthorized(); // nah
+            }
             if (ModelState.IsValid)
             {
                 _context.Products.Update(product);
@@ -75,11 +83,19 @@ namespace WeCommerce.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            if (!((bool?)HttpContext.Items["isAdmin"] ?? false))
+            {
+                return Unauthorized(); // nah
+            }
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
+            if (!((bool?)HttpContext.Items["isAdmin"] ?? false))
+            {
+                return Unauthorized(); // nah
+            }
             if (ModelState.IsValid)
             {
                 // add to DB
@@ -97,6 +113,10 @@ namespace WeCommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            if (!((bool?)HttpContext.Items["isAdmin"] ?? false))
+            {
+                return Unauthorized(); // nah
+            }
             Product? product = await _context.Products.FindAsync(id);
             if (product == null)
             {
@@ -108,6 +128,10 @@ namespace WeCommerce.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!((bool?)HttpContext.Items["isAdmin"] ?? false))
+            {
+                return Unauthorized(); // nah
+            }
             Product? product = await _context.Products.FindAsync(id);
             if (product == null)
             {

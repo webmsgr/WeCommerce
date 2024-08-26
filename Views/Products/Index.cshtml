@@ -1,5 +1,6 @@
 ﻿@model ProductCatalogPageViewModel
-
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor _context;
 @{
     ViewData["Title"] = "All Products";
 }
@@ -14,9 +15,13 @@
     </div>
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (((bool?)_context.HttpContext?.Items["isAdmin"]) ?? false)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 @if (!Model.Products.Any())
 {
     <p>No products found</p>
@@ -39,8 +44,12 @@ else
                             <p class="card-text">@Html.DisplayFor(modelItem => item.ShortDescription)</p>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.ProductId">View</a>
-                                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
-                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                                @if (((bool?)_context.HttpContext?.Items["isAdmin"]) ?? false)
+                                {
+                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                                }
+                                
                             </div>
                         </div>
                     </div>

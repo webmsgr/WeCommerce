@@ -53,7 +53,7 @@ namespace WeCommerce
 
             app.Use(async (context, next) =>
             {
-
+                context.Items["isAdmin"] = false;
                 if (context.Session.GetInt32("User") != null && context.Request.Path != "/Users/ForceChangePassword")
                 {
                     // we're logged in, somehow get a context?
@@ -74,6 +74,8 @@ namespace WeCommerce
                             {
                                 context.Response.Redirect($"/Users/ForceChangePassword"); // bad but idk how else
                             }
+
+                            context.Items["isAdmin"] = user.IsAdmin;
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿@model WeCommerce.Models.Product
-
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor _context;
 @{
     ViewData["Title"] = "Details";
 }
@@ -32,7 +33,10 @@
                     { 
                         <a href="#" class="btn btn-primary">Add to cart</a>
                     }
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a>
+                    @if (((bool?)_context.HttpContext?.Items["isAdmin"]) ?? false)
+                    {
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a>
+                    }
                 </div>
             </div>
         </div>
