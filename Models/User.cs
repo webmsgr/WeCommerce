@@ -3,12 +3,13 @@ using WeCommerce.Util;
 
 namespace WeCommerce.Models
 {
-    public class UserRegister
+    public class User
     {
         /// <summary>
         /// The user's email address.
         /// </summary>
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
 
@@ -23,21 +24,14 @@ namespace WeCommerce.Models
 
 
         /// <summary>
-        /// The user's password
+        /// The user's password hash.
         /// </summary>
         [Required]
-        public string Password { get; set; }
+        [MaxLength(Geralt.Argon2id.MaxHashSize)]
+        public string PasswordHash { get; set; }
 
 
-        public User ToUser()
-        {
-            return new User
-            {
-                Email = Email,
-                Username = Username,
-                PasswordHash = Crypto.HashPassword(Password)
-            };
-        }
+        
 
     }
 

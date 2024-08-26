@@ -3,7 +3,7 @@ using WeCommerce.Util;
 
 namespace WeCommerce.Models
 {
-    public class User
+    public class UserRegister
     {
         /// <summary>
         /// The unique identifier for the user.
@@ -15,9 +15,18 @@ namespace WeCommerce.Models
         /// The user's email address.
         /// </summary>
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
 
+
+        /// <summary>
+        /// Confirm email address
+        /// </summary>
+        [Required]
+        [EmailAddress]
+        [Compare("Email")]
+        public string ConfirmEmail { get; set; }
 
         /// <summary>
         /// The user's username
@@ -29,10 +38,20 @@ namespace WeCommerce.Models
 
 
         /// <summary>
-        /// The user's password hash. NOT PLAINTEXT.
+        /// The user's password.
         /// </summary>
         [Required]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
+
+        public User ToUser()
+        {
+            return new User
+            {
+                Email = Email,
+                Username = Username,
+                PasswordHash = Crypto.HashPassword(Password)
+            };
+        }
 
     }
 
