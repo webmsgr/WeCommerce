@@ -22,6 +22,7 @@ public class Product
     /// The product's description
     /// </summary>
     [Required]
+    [DataType(DataType.MultilineText)]
     public string Description { get; set; }
 
     /// <summary>

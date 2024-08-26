@@ -12,9 +12,16 @@ namespace WeCommerce.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>();
+            modelBuilder.Entity<User>()
+                .HasIndex("Username")
+                .IsUnique();
+            modelBuilder.Entity<User>()
+                .HasIndex("Email")
+                .IsUnique();
         }
     }
 }
