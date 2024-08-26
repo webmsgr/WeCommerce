@@ -32,8 +32,6 @@ namespace WeCommerce.Models
         /// The user's password hash. NOT PLAINTEXT.
         /// </summary>
         [Required]
-        [MaxLength(Geralt.Argon2id.MaxHashSize)]
-        [MinLength(Geralt.Argon2id.MinHashSize)]
         public string PasswordHash { get; set; }
 
     }
