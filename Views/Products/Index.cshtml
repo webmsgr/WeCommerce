@@ -51,6 +51,20 @@ else
             <span class="col-4"></span>
             <nav class="mx-auto mt-4 col-4" style="width: fit-content">
                 <ul class="pagination">
+                    @{
+                        var previous = Model.CurrentPage - 1;
+                        var next = Model.CurrentPage + 1;
+                    }
+                    @if (Model.CurrentPage > 1)
+                    {
+                        <li class="page-item"><a class="page-link" asp-route-id="1" asp-action="Index">First</a></li>
+                        <li class="page-item"><a class="page-link" asp-route-id="@previous" asp-action="Index">Previous</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled"><a class="page-link">First</a></li>
+                        <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                    }
                     @for (int cpage = 1; cpage <= Model.PageCount; cpage++)
                     {
                         @if (cpage == Model.CurrentPage)
@@ -62,6 +76,16 @@ else
                             <li class="page-item"><a class="page-link" asp-route-id="@cpage" asp-action="Index">@cpage</a></li>
                         }
 
+                    }
+                    @if (Model.CurrentPage < Model.PageCount)
+                    {
+                        <li class="page-item"><a class="page-link" asp-route-id="@next" asp-action="Index">Next</a></li>
+                        <li class="page-item"><a class="page-link" asp-route-id="@Model.PageCount" asp-action="Index">Last</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled"><a class="page-link">Next</a></li>
+                        <li class="page-item disabled"><a class="page-link">Last</a></li>
                     }
 
                 </ul>
