@@ -19,7 +19,7 @@ namespace WeCommerce.Controllers
         public async Task<IActionResult> Index(int? id)
         {
             int page = id ?? 1;
-            const int PageSize = 2;
+            const int PageSize = 10;
             if (page < 1)
             {
                 return NotFound();
