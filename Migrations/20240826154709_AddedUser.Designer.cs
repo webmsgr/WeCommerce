@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WeCommerce.Data;
 
@@ -10,9 +11,11 @@ using WeCommerce.Data;
 namespace WeCommerce.Migrations
 {
     [DbContext(typeof(WeCommerceContext))]
-    partial class WeCommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20240826154709_AddedUser")]
+    partial class AddedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

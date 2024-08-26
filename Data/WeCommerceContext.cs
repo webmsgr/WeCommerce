@@ -16,7 +16,9 @@ namespace WeCommerce.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>();
-            modelBuilder.Entity<User>();
+            modelBuilder.Entity<User>()
+                .HasIndex("Username")
+                .IsUnique();
         }
     }
 }
