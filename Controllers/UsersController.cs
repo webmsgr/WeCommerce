@@ -42,6 +42,7 @@ namespace WeCommerce.Controllers
             if (login.Matches(user))
             {
                 // log em in
+                HttpContext.Session.SetInt32("User", user.UserId);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -53,10 +54,20 @@ namespace WeCommerce.Controllers
         }
 
         [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("User");
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
+
+       
 
         [HttpPost]
         public async Task<IActionResult> Register(UserRegister user)

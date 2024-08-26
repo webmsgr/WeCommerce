@@ -12,6 +12,17 @@ namespace WeCommerce
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // add stuff for logging in
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            });
+
+
             // add database
             builder.Services.AddDbContext<WeCommerceContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -31,6 +42,8 @@ namespace WeCommerce
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
