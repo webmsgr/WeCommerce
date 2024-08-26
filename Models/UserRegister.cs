@@ -11,6 +11,7 @@ namespace WeCommerce.Models
         /// </summary>
         [Required]
         [EmailAddress]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
 
@@ -22,6 +23,7 @@ namespace WeCommerce.Models
         [EmailAddress]
         [Compare("Email")]
         [Display(Name = "Confirm Email")]
+        [DataType(DataType.EmailAddress)]
         public string ConfirmEmail { get; set; }
 
         /// <summary>
@@ -38,6 +40,7 @@ namespace WeCommerce.Models
         /// </summary>
         [Required]
         [MinLength(8)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         /// <summary>
@@ -46,6 +49,7 @@ namespace WeCommerce.Models
         [Required]
         [Compare("Password")]
         [Display(Name = "Confirm Password")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
         public User ToUser()
