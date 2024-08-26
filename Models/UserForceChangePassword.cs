@@ -2,17 +2,9 @@
 
 namespace WeCommerce.Models
 {
-    public class UserChangePassword
+    public class UserForceChangePassword
     {
 
-        /// <summary>
-        /// The user's old password
-        /// </summary>
-        [Required]
-        [MinLength(8)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Old Password")]
-        public string OldPassword { get; set; }
 
         /// <summary>
         /// The user's new password.

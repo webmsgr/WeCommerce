@@ -36,8 +36,12 @@ namespace WeCommerce.Models
         [MaxLength(Geralt.Argon2id.MaxHashSize)]
         public string PasswordHash { get; set; }
 
+        /// <summary>
+        /// If the user should be FORCED to change their password before they can do anything. Uses middleware.
+        /// </summary>
+        [Required] 
+        public bool ForceChangePassword { get; set; }
 
-        
 
     }
 

@@ -149,5 +149,34 @@ namespace WeCommerce.Controllers
 
             return BadRequest();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ForceChangePassword(UserForceChangePassword changePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _context.Users.FindAsync(HttpContext.Session.GetInt32("User"));
+                if (user == null)
+                {
+                    return RedirectToAction("Login");
+                }
+                if (!user.ForceChangePassword)
+                {
+                   return RedirectToAction("Profile"); // nuh uh
+                }
+                user.PasswordHash = Crypto.HashPassword(changePassword.Password);
+                user.ForceChangePassword = false;
+                await _context.SaveChangesAsync();
+                TempData["message"] = "Password changed successfully";
+                return RedirectToAction("Profile");
+            }
+
+            return BadRequest();
+        }
+        public IActionResult ForceChangePassword()
+        {
+            return View();
+        }
     }
+
 }
