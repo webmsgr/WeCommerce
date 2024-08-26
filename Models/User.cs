@@ -43,6 +43,11 @@ namespace WeCommerce.Models
         public bool ForceChangePassword { get; set; }
 
 
+        /// <summary>
+        /// Is this user an admin?
+        /// </summary>
+        [Required]
+        public bool IsAdmin { get; set; }
     }
 
 
