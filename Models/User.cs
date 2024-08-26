@@ -6,6 +6,11 @@ namespace WeCommerce.Models
     public class User
     {
         /// <summary>
+        /// The unique identifier for the user.
+        /// </summary>
+        [Key]
+        public int UserId { get; set; }
+        /// <summary>
         /// The user's email address.
         /// </summary>
         [Required]

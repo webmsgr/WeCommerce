@@ -18,6 +18,7 @@ namespace WeCommerce.Models
         /// The user's password. Not hashed.
         /// </summary>
         [Required]
+        [MinLength(8)]
         public string Password { get; set; }
 
         /// <summary>

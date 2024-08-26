@@ -5,11 +5,6 @@ namespace WeCommerce.Models
 {
     public class UserRegister
     {
-        /// <summary>
-        /// The unique identifier for the user.
-        /// </summary>
-        [Key]
-        public int UserId { get; set; }
 
         /// <summary>
         /// The user's email address.
@@ -26,6 +21,7 @@ namespace WeCommerce.Models
         [Required]
         [EmailAddress]
         [Compare("Email")]
+        [Display(Name = "Confirm Email")]
         public string ConfirmEmail { get; set; }
 
         /// <summary>
@@ -49,6 +45,7 @@ namespace WeCommerce.Models
         /// </summary>
         [Required]
         [Compare("Password")]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
         public User ToUser()
