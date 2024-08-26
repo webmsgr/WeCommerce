@@ -19,6 +19,9 @@ namespace WeCommerce.Data
             modelBuilder.Entity<User>()
                 .HasIndex("Username")
                 .IsUnique();
+            modelBuilder.Entity<User>()
+                .HasIndex("Email")
+                .IsUnique();
         }
     }
 }

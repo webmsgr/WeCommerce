@@ -15,6 +15,7 @@ namespace WeCommerce.Models
         /// </summary>
         [Required]
         [EmailAddress]
+        
         public string Email { get; set; }
 
 
