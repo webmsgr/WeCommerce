@@ -49,7 +49,7 @@ namespace WeCommerce.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("WeCommerce.Models.User", b =>
@@ -82,7 +82,7 @@ namespace WeCommerce.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }
