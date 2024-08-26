@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using WeCommerce.Data;
 using WeCommerce.Models;
+using WeCommerce.Util;
 
 namespace WeCommerce.Controllers
 {
@@ -30,6 +31,7 @@ namespace WeCommerce.Controllers
             {
                 return View(login); // nuh uh
             }
+
             // find the user by username
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username);
             if (user == null)
@@ -38,6 +40,7 @@ namespace WeCommerce.Controllers
                 ModelState.AddModelError("Password", "Invalid Username/Password");
                 return View(login);
             }
+
             // thank you me for the Matches method.
             if (login.Matches(user))
             {
@@ -67,7 +70,7 @@ namespace WeCommerce.Controllers
         }
 
 
-       
+
 
         [HttpPost]
         public async Task<IActionResult> Register(UserRegister user)
@@ -96,7 +99,55 @@ namespace WeCommerce.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+
             return View(user);
+        }
+
+
+        public async Task<IActionResult> Profile()
+        {
+            if (HttpContext.Session.GetInt32("User") == null)
+            {
+                return RedirectToAction("Login");
+            }
+            var user = await _context.Users.FindAsync(HttpContext.Session.GetInt32("User"));
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+            return View(new UserProfileViewModel
+            {
+                User = user,
+            });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(UserChangePassword changePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _context.Users.FindAsync(HttpContext.Session.GetInt32("User"));
+                if (user == null)
+                {
+                    return RedirectToAction("Login");
+                }
+                if (!Crypto.VerifyPassword(user.PasswordHash, changePassword.OldPassword))
+                {
+                    ModelState.AddModelError("OldPassword", "Invalid Password");
+                    return View("Profile", new UserProfileViewModel
+                    {
+                        User = user,
+                        ChangePassword = changePassword
+                    });
+                }
+                user.PasswordHash = Crypto.HashPassword(changePassword.Password);
+                await _context.SaveChangesAsync();
+                TempData["message"] = "Password changed successfully";
+                return RedirectToAction("Profile");
+            }
+
+            return BadRequest();
         }
     }
 }
