@@ -16,10 +16,29 @@ namespace WeCommerce.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var products = await _context.Products.ToListAsync();
-            return View(products);
+            int page = id ?? 1;
+            const int PageSize = 2;
+            if (page < 1)
+            {
+                return NotFound();
+            }
+            var products = await _context.Products
+                .OrderBy(p => p.ProductId)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+            var productPageCount = (int)Math.Ceiling(await _context.Products.CountAsync() / (double)PageSize);
+            
+            var model = new ProductCatalogPageViewModel
+            {
+                Products = products,
+                PageCount = productPageCount,
+                CurrentPage = page
+            };
+
+            return View(model);
         }
 
 
