@@ -97,7 +97,7 @@ namespace WeCommerce.Controllers
                     return View(user);
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Users");
             }
 
             return View(user);
