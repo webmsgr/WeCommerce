@@ -17,6 +17,42 @@ namespace WeCommerce.Controllers
         }
 
         [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+        public async Task<IActionResult> Login(UserLogin login)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(login); // nuh uh
+            }
+            // find the user by username
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username);
+            if (user == null)
+            {
+                ModelState.AddModelError("Username", "Invalid Username/Password");
+                ModelState.AddModelError("Password", "Invalid Username/Password");
+                return View(login);
+            }
+            // thank you me for the Matches method.
+            if (login.Matches(user))
+            {
+                // log em in
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("Username", "Invalid Username/Password");
+                ModelState.AddModelError("Password", "Invalid Username/Password");
+                return View(login);
+            }
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
