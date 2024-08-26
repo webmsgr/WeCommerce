@@ -1,0 +1,45 @@
+﻿@model WeCommerce.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container">
+    <div class="row">
+        <img src="https://placehold.co/600x600" class="col-6" alt="Product Image">
+        <div class="col-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title display-3">@Model.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary display-5">
+                        @Html.DisplayFor(model => model.Price)
+                    </h6>
+
+                    <p class="card-text" style="white-space: pre-wrap">@Model.Description</p>
+                </div>
+                <div class="card-footer">
+                    @if (Model.Quantity == 0)
+                    {
+                        <!-- not standard????? supported in all major browsers since 2015?? (thanks edge, way to bring down the curve) -->
+                        <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled#html.elements.button.disabled -->
+                        <a href="#" class="btn btn-danger disabled" disabled>Out of stock!</a>
+                    }
+                    else if (Model.Quantity < 10)
+                    {
+                        <a href="#" class="btn btn-warning">Add to cart (@Model.Quantity Left!)</a>
+                    }
+                    else
+                    { 
+                        <a href="#" class="btn btn-primary">Add to cart</a>
+                    }
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    
+</div>
