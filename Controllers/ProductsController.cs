@@ -44,6 +44,9 @@ namespace WeCommerce.Controllers
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync();
 
+
+                TempData["message"] = "Product updated successfully";
+
                 return RedirectToAction("Index");
             }
             return View(product);
