@@ -1,0 +1,14 @@
+﻿@model WeCommerce.Models.Product
+
+@{
+    ViewData["Title"] = "Delete " + Model.Name;
+}
+
+<h1>Delete @Model.Name</h1>
+
+<h3>Are you sure you want to delete @Model.Name?</h3>
+
+<form asp-action="Delete">
+    <input type="submit" value="Yes" class="btn btn-danger" />
+    <a class="btn btn-success" asp-action="Index">No</a>
+</form>
