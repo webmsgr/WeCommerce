@@ -18,8 +18,6 @@ namespace WeCommerce.Models
         /// The user's password. Not hashed.
         /// </summary>
         [Required]
-        [MaxLength(Geralt.Argon2id.MaxHashSize)]
-        [MinLength(Geralt.Argon2id.MinHashSize)]
         public string Password { get; set; }
 
         /// <summary>
